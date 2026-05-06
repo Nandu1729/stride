@@ -12,7 +12,7 @@ import { errorHandler, notFoundHandler } from '../src/middleware/error-handler.j
 
 function makeApp() {
   const app = express();
-  app.use(express.json());
+  app.use(express.json() as unknown as RequestHandler);
 
   app.get('/throw/bad', (_req, _res, next) => next(BadRequest('nope')));
   app.get('/throw/unauth', (_req, _res, next) => next(Unauthorized()));
