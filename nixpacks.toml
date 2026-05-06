@@ -1,0 +1,24 @@
+# Railway Nixpacks build for Stride.
+# A single web service builds the React SPA, copies the built assets next to the
+# compiled backend, and starts Express. Express serves the SPA for any non-/api
+# path when WEB_DIST_DIR is set.
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "openssl"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = [
+  "npx prisma generate --schema backend/prisma/schema.prisma",
+  "npm run build",
+  "cp -R web/dist backend/dist/web",
+]
+
+[start]
+cmd = "npx prisma migrate deploy --schema backend/prisma/schema.prisma && WEB_DIST_DIR=backend/dist/web node backend/dist/index.js"
+
+[variables]
+NODE_ENV = "production"
+COOKIE_SECURE = "true"
