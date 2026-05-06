@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: stride-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: stride
+      POSTGRES_PASSWORD: stride
+      POSTGRES_DB: stride
+    ports:
+      - "5432:5432"
+    volumes:
+      - stride_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stride -d stride"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  stride_pgdata:
