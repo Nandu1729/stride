@@ -1,0 +1,112 @@
+// Stride — Prisma schema
+//
+// Postgres in production (Railway). Local dev can use SQLite by switching
+// the datasource provider to "sqlite" and DATABASE_URL to "file:./dev.db".
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  ownedProjects Project[]   @relation("ProjectOwner")
+  memberships   Membership[]
+  createdTasks  Task[]      @relation("TaskCreator")
+  assignedTasks Task[]      @relation("TaskAssignee")
+  comments      Comment[]
+
+  @@index([email])
+}
+
+model Project {
+  id          String       @id @default(cuid())
+  name        String
+  description String?
+  ownerId     String
+  owner       User         @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  members Membership[]
+  tasks   Task[]
+
+  @@index([ownerId])
+}
+
+model Membership {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @default(MEMBER)
+  joinedAt  DateTime @default(now())
+
+  @@unique([projectId, userId])
+  @@index([userId])
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  priority    Priority   @default(MEDIUM)
+  dueDate     DateTime?
+  position    Int        @default(0)
+
+  createdById String
+  createdBy   User       @relation("TaskCreator", fields: [createdById], references: [id])
+  assigneeId  String?
+  assignee    User?      @relation("TaskAssignee", fields: [assigneeId], references: [id])
+
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([projectId, status])
+  @@index([assigneeId])
+  @@index([dueDate])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  body      String
+  createdAt DateTime @default(now())
+
+  @@index([taskId, createdAt])
+}
