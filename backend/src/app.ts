@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
-import express, { type Express } from 'express';
+import express, { type Express, type RequestHandler } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -28,20 +28,20 @@ export function buildApp(): Express {
   app.use(
     pinoHttp({
       logger,
-      customProps: (req) => ({ requestId: req.id }),
+      customProps: (req) => ({ requestId: (req as unknown as { id?: string }).id }),
       autoLogging: { ignore: (req) => req.url === '/api/healthz' || req.url === '/api/readyz' },
-    }),
+    }) as unknown as RequestHandler,
   );
-  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(helmet({ contentSecurityPolicy: false }) as unknown as RequestHandler);
   app.use(
     cors({
       origin: env.CORS_ORIGIN.split(',').map((s) => s.trim()),
       credentials: true,
-    }),
+    }) as unknown as RequestHandler,
   );
-  app.use(cookieParser());
-  app.use(express.json({ limit: '1mb' }));
-  app.use(generalLimiter);
+  app.use(cookieParser() as unknown as RequestHandler);
+  app.use(express.json({ limit: '1mb' }) as unknown as RequestHandler);
+  app.use(generalLimiter as unknown as RequestHandler);
 
   app.use('/api', healthRoutes);
   app.use('/api/auth', authRoutes);
@@ -53,9 +53,13 @@ export function buildApp(): Express {
   if (env.WEB_DIST_DIR) {
     const webDir = path.resolve(env.WEB_DIST_DIR);
     if (fs.existsSync(webDir)) {
-      app.use(express.static(webDir));
-      app.get(/^\/(?!api).*/, (_req, res) => {
-        res.sendFile(path.join(webDir, 'index.html'));
+      app.use(express.static(webDir) as unknown as RequestHandler);
+      app.use((req, res, next) => {
+        if (req.method === 'GET' && !req.path.startsWith('/api')) {
+          res.sendFile(path.join(webDir, 'index.html'));
+          return;
+        }
+        next();
       });
     } else {
       logger.warn({ webDir }, 'WEB_DIST_DIR set but directory does not exist; web not served');

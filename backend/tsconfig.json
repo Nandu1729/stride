@@ -5,22 +5,21 @@
     "moduleResolution": "Bundler",
     "lib": ["ES2022"],
     "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
-    "declaration": true,
+    "declaration": false,
     "sourceMap": true,
     "outDir": "dist",
-    "rootDir": "src",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["node"]
   },
   "include": ["src/**/*", "tests/**/*", "prisma/**/*"],
   "exclude": ["dist", "node_modules"]
