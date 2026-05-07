@@ -10,7 +10,7 @@ Ethara AI — Full-Stack Assessment, Round 1.
 | GitHub repository link        | https://github.com/Nandu1729/stride                                |
 | README file                   | `README.txt` at the repository root (mirrors `README.md`)          |
 | Demo video                    | _2–5 minute walkthrough recorded against the live URL; see `docs/DEMO.md`_ |
-| Updated resume                | `submission/Resume_Nanda_Kishore_Arra_Ethara.html` (open in Chrome → Save as PDF) |
+| Updated resume                | _Uploaded directly to the form. The artifact lives outside the repo, in `~/OneDrive/Desktop/Ethara_Submission/`._ |
 
 ## Pre-submission checklist
 
