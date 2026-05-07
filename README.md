@@ -3,15 +3,6 @@
 A team task manager for small teams. Create a project, invite teammates, work
 through a three-column board, and watch what is overdue.
 
-Built for the **Ethara AI Round 1 — App Development Task** (Team Task Manager,
-Full-Stack), 6th-7th May 2026.
-
-> **Live URL:** _replace with your Railway URL once deployed; see `docs/DEPLOY.md`._
->
-> **Demo credentials** (after `npm run db:seed`):
->   email — `demo@stride.app`
->   password — `DemoPass123!`
-
 ---
 
 ## What it does
@@ -191,8 +182,6 @@ Stride is built as a single web service on Railway. The full walkthrough is in
 - **Live URL** — _replace once deployed (see `docs/DEPLOY.md`)._
 - **GitHub repo** — https://github.com/Nandu1729/stride
 - **README** — this file (`README.md`) and `README.txt` for the form upload.
-- **Demo video** — script in `docs/DEMO.md` (2-5 minutes).
-
 ## License
 
 MIT. See `LICENSE`.
