@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { loadEnvFile } from 'node:process';
+try { loadEnvFile(new URL('../../.env', import.meta.url)); } catch {}
 
 const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
