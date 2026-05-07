@@ -79,7 +79,7 @@ export function LandingPage() {
       </section>
 
       <footer className="border-t border-ink-100 py-6 text-center text-xs text-ink-500">
-        Built for the Ethara AI Round 1 assignment by Arra Chaitanya Kumar.
+        Built for the Ethara AI Round 1 assignment by Nanda Kishore Arra.
       </footer>
     </div>
   );
