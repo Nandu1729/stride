@@ -50,10 +50,6 @@ A handful of decisions worth calling out:
   (including owner-protection invariants), and the task service's RBAC matrix
   (admin / creator / assignee / member / non-member).
 
-If a piece feels over-engineered for a 1-2 day prompt, it is the things that
-quietly trip you up at the demo. Validation, RBAC, the error contract, and
-the deploy config were built first; UI followed.
-
 ## Tech stack
 
 - **Backend** — Node.js 20, TypeScript (strict), Express 4, Prisma 5,
@@ -182,6 +178,4 @@ Stride is built as a single web service on Railway. The full walkthrough is in
 - **Live URL** — _replace once deployed (see `docs/DEPLOY.md`)._
 - **GitHub repo** — https://github.com/Nandu1729/stride
 - **README** — this file (`README.md`) and `README.txt` for the form upload.
-## License
 
-MIT. See `LICENSE`.
