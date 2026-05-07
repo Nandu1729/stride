@@ -104,7 +104,6 @@ stride/
     ARCHITECTURE.md         How the app fits together
     API.md                  Endpoint reference
     DEPLOY.md               Railway deploy walkthrough
-    DEMO.md                 Demo video script
   scripts/submit-check.mjs  Pre-submission checks
   railway.json / nixpacks.toml / Procfile
 ```
