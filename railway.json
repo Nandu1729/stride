@@ -2,7 +2,7 @@
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "npm ci && npx prisma generate --schema backend/prisma/schema.prisma && npm run build && cp -R web/dist backend/dist/web"
+    "buildCommand": "npx prisma generate --schema backend/prisma/schema.prisma && npm run build && cp -R web/dist backend/dist/web"
   },
   "deploy": {
     "startCommand": "npx prisma migrate deploy --schema backend/prisma/schema.prisma && WEB_DIST_DIR=backend/dist/web node backend/dist/index.js",
