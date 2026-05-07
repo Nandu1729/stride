@@ -175,7 +175,6 @@ Stride is built as a single web service on Railway. The full walkthrough is in
 
 ## Submission
 
-- **Live URL** — _replace once deployed (see `docs/DEPLOY.md`)._
+- **Live URL** — https://stride-production-3e52.up.railway.app
 - **GitHub repo** — https://github.com/Nandu1729/stride
-- **README** — this file (`README.md`) and `README.txt` for the form upload.
 
